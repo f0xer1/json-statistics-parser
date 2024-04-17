@@ -28,15 +28,12 @@ public class JsonOrderGenerator {
 
 
     public static void main(String[] args) {
-        JsonFactory factory = new JsonFactory();
-        Random random = new Random();
-        JsonOrderGenerator orderGenerator = new JsonOrderGenerator(random, factory);
-        int numberOfFiles = orderGenerator.getRandomValueByMaxValue(20) + 1;
-        orderGenerator.generateMultipleJsonFiles(numberOfFiles);
-
+        JsonOrderGenerator orderGenerator = new JsonOrderGenerator(new Random(), new JsonFactory());
+        orderGenerator.generateOrders();
     }
 
-    private void generateMultipleJsonFiles(int numberOfFiles) {
+    public void generateOrders() {
+        int numberOfFiles = getRandomValueByMaxValue(20) + 1;
         for (int i = 0; i < numberOfFiles; i++) {
             generateJsonFile();
         }
@@ -46,7 +43,7 @@ public class JsonOrderGenerator {
         Path outputFile = resultFileDirectory.resolve(getOutputFileName());
         try (JsonGenerator generator = factory.createGenerator(Files.newBufferedWriter(outputFile, StandardCharsets.UTF_8))) {
             generator.writeStartArray();
-            for (int i = 0; i <= getRandomValueByMaxValue(10000); i++) {
+            for (int i = 0; i <= getRandomValueByMaxValue(Integer.MAX_VALUE); i++) {
                 generateJson(generator);
             }
             generator.writeEndArray();
@@ -58,9 +55,9 @@ public class JsonOrderGenerator {
 
     private void generateJson(JsonGenerator generator) throws IOException {
         generator.writeStartObject();
-        generator.writeNumberField("orderNumber", getRandomValueByMaxValue(50000));
+        generator.writeNumberField("order_number", getRandomValueByMaxValue(50000));
         generator.writeStringField("items", items.get(getRandomValueByMaxValue(5)));
-        generator.writeNumberField("totalAmount", totalAmounts.get(getRandomValueByMaxValue(5)));
+        generator.writeNumberField("total_amount", totalAmounts.get(getRandomValueByMaxValue(5)));
         generator.writeStringField("customer", customers.get(getRandomValueByMaxValue(5)));
         generator.writeEndObject();
     }

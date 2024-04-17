@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class CommandLineAnalyzer {
     public void setAttribute(String attribute, CommandSpec spec) {
         if (Arrays.stream(OrderAttributes.values())
-                .noneMatch(attr -> attr.name().equals(attribute.toUpperCase()))) {
+                .noneMatch(attr -> attr.toString().equalsIgnoreCase(attribute))) {
             throw new ParameterException(spec.commandLine(), String.format("Error: invalid argument '%s' for " +
                     "'--attribute'. Valid arguments are %s", attribute, Arrays.toString(OrderAttributes.values())));
         }
@@ -26,4 +26,10 @@ public class CommandLineAnalyzer {
         }
     }
 
+    public void setThreadNumber(Integer threadNumber, CommandSpec spec) {
+        if (!(threadNumber >= 1 && threadNumber <= 0x7fff)) {
+            throw new ParameterException(spec.commandLine(),
+                    String.format("Error: '%s' is not valid, the thread number must be 1 - 32767.", threadNumber));
+        }
+    }
 }

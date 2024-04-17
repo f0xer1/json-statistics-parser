@@ -65,7 +65,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>command.FileCommandHandler</mainClass>
+                            <mainClass>JsonStatisticsParserApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
