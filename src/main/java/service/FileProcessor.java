@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+
 /**
  * The `FileProcessor` class is responsible for processing JSON files and extracting
  * statistics based on a specified attribute.
@@ -74,7 +75,10 @@ public class FileProcessor {
      */
     private void handleAttribute(String attribute, HashMap<String, Integer> map) {
         for (String part : attribute.split(", ")) {
-            map.put(part, map.getOrDefault(part, 0) + 1);
+
+            if (!part.equals("null" )){
+                map.put(part, map.getOrDefault(part, 0) + 1);
+            }
         }
     }
 
