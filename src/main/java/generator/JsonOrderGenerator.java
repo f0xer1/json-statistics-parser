@@ -12,6 +12,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The `JsonOrderGenerator` class is responsible for generating random JSON files containing
+ * simulated order data. It creates a set of JSON files in the "src/main/resources/data"
+ * directory, with each file containing an array of order objects.
+ * <p>
+ * The `JsonOrderGenerator` class uses the Jackson JSON library to generate the JSON files.
+ */
 @RequiredArgsConstructor
 public class JsonOrderGenerator {
     private final Random random;
@@ -32,6 +39,12 @@ public class JsonOrderGenerator {
         orderGenerator.generateOrders();
     }
 
+    /**
+     * Generates a set of JSON files containing simulated order data.
+     * <p>
+     * The number of JSON files generated is a random value between 1 and 20, and
+     * the number of order objects in each file is also a random value.
+     */
     public void generateOrders() {
         int numberOfFiles = getRandomValueByMaxValue(20) + 1;
         for (int i = 0; i < numberOfFiles; i++) {
@@ -39,6 +52,9 @@ public class JsonOrderGenerator {
         }
     }
 
+    /**
+     * Generates a single JSON file containing an array of order objects.
+     */
     private void generateJsonFile() {
         Path outputFile = resultFileDirectory.resolve(getOutputFileName());
         try (JsonGenerator generator = factory.createGenerator(Files.newBufferedWriter(outputFile, StandardCharsets.UTF_8))) {
@@ -53,6 +69,18 @@ public class JsonOrderGenerator {
 
     }
 
+    /**
+     * Generates a single order object and writes it to the JSON generator.
+     * <p>
+     * The order object contains the following properties:
+     * - `order_number`: A random order number between 0 and 50,000.
+     * - `items`: A randomly selected string from the `items` list.
+     * - `total_amount`: A randomly selected decimal value from the `totalAmounts` list.
+     * - `customer`: A randomly selected string from the `customers` list.
+     *
+     * @param generator the JSON generator to write the order object to
+     * @throws IOException if an error occurs during JSON generation
+     */
     private void generateJson(JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         generator.writeNumberField("order_number", getRandomValueByMaxValue(50000));

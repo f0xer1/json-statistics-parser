@@ -9,10 +9,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * The `FileProcessor` class is responsible for processing JSON files and extracting
+ * statistics based on a specified attribute.
+ */
 @RequiredArgsConstructor
 public class FileProcessor {
     private final JsonFactory factory = new JsonFactory();
 
+    /**
+     * Processes a JSON file and extracts statistics based on the specified attribute.
+     *
+     * @param file      the JSON file to process
+     * @param attribute the attribute to extract statistics for
+     * @return a `HashMap<String, Integer>` representing the statistics of the specified
+     * attribute in the JSON file
+     */
     public HashMap<String, Integer> processingJsonArray(File file, String attribute) {
         HashMap<String, Integer> map = new HashMap<>();
         try (JsonParser parser = factory.createParser(file)) {
@@ -34,6 +46,14 @@ public class FileProcessor {
         return map;
     }
 
+    /**
+     * Processes a JSON object and extracts the specified attribute.
+     *
+     * @param parser    the JSON parser
+     * @param attribute the attribute to extract
+     * @param map       the statistics map to update
+     * @throws IOException if an error occurs during JSON parsing
+     */
     private void processingJsonObject(JsonParser parser, String attribute, HashMap<String, Integer> map) throws IOException {
         if (parser.currentToken() == JsonToken.START_OBJECT) {
             while (parser.nextToken() != JsonToken.END_OBJECT) {
@@ -45,7 +65,13 @@ public class FileProcessor {
             }
         }
     }
-
+    /**
+     * Handles the specified attribute by splitting it on the ", " delimiter and updating
+     * the statistics map accordingly.
+     *
+     * @param attribute the attribute to handle
+     * @param map the statistics map to update
+     */
     private void handleAttribute(String attribute, HashMap<String, Integer> map) {
         for (String part : attribute.split(", ")) {
             map.put(part, map.getOrDefault(part, 0) + 1);

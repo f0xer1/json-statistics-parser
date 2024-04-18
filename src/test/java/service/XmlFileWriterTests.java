@@ -1,6 +1,6 @@
 package service;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,6 +25,7 @@ public class XmlFileWriterTests {
 
 
     @Test
+    @DisplayName("Test writing of valid data")
     void testWriteIsValid() throws ParserConfigurationException, IOException, SAXException {
         Map<String, Long> data = Map.of("A", 5L, "B", 10L);
 
@@ -48,7 +49,7 @@ public class XmlFileWriterTests {
         }
         Files.deleteIfExists(path);
     }
-
+    @DisplayName("Test writing if data is empty")
     @Test
     void testWriteIfMapIsEmpty() throws ParserConfigurationException, IOException, SAXException {
         Map<String, Long> data = Map.of();
