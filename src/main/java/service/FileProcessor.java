@@ -14,16 +14,22 @@ public class FileProcessor {
     private final JsonFactory factory = new JsonFactory();
 
     public HashMap<String, Integer> processingJsonArray(File file, String attribute) {
-        HashMap<String, Integer> map =  new HashMap<>();
+        HashMap<String, Integer> map = new HashMap<>();
         try (JsonParser parser = factory.createParser(file)) {
-            if (parser.nextToken() != JsonToken.START_ARRAY) {
-                throw new IOException("Expected an array as the root");
-            }
-            while (parser.nextToken() != JsonToken.END_ARRAY) {
+            JsonToken rootToken = parser.nextToken();
+            if (rootToken == JsonToken.START_OBJECT) {
                 processingJsonObject(parser, attribute, map);
+            } else if (rootToken == JsonToken.START_ARRAY) {
+                while (parser.nextToken() != JsonToken.END_ARRAY) {
+                    processingJsonObject(parser, attribute, map);
+                }
+            } else {
+                throw new IOException("Expected an array or object as the root");
             }
+
         } catch (IOException e) {
             System.err.println("Error processing JSON array: " + e.getMessage());
+            map.clear();
         }
         return map;
     }

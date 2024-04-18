@@ -14,6 +14,7 @@ public class JsonFileReader {
         try (Stream<Path> pathStream = Files.walk(Paths.get(directoryPath))) {
             files = pathStream
                     .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().toLowerCase().endsWith(".json"))
                     .map(Path::toFile).toList();
         } catch (IOException e) {
             e.printStackTrace();

@@ -17,7 +17,7 @@ public class JsonOrderGenerator {
     private final Random random;
     private final JsonFactory factory;
 
-    private final Path resultFileDirectory = Path.of("src", "main", "resources", "json");
+    private final Path resultFileDirectory = Path.of("src", "main", "resources", "data");
     private final List<String> items = Arrays.asList("Shirt, Pen, Lock", "Pants", "Shoes, Tripod",
             "Laptop, Camera", "Mouse");
     private final List<Double> totalAmounts = Arrays.asList(222.3, 235.2, 6727.0, 324.0, 2226.3);

@@ -43,6 +43,7 @@ public class FileCommandHandler implements Runnable {
 
     @Override
     public void run() {
-        writer.write(executor.execute(attribute, JsonFileReader.getFiles(directoryPath), threadNumber), attribute);
+        System.out.println( writer.write(executor.execute(attribute, JsonFileReader.getFiles(directoryPath), threadNumber),
+                attribute, directoryPath));
     }
 }

@@ -1,7 +1,6 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/main/resources/data/*.xml
 !**/src/test/**/target/
 dependency-reduced-pom.xml
 ### IntelliJ IDEA ###
@@ -12,6 +11,8 @@ dependency-reduced-pom.xml
 *.iws
 *.iml
 *.ipr
+# Ignore XML files in /src/main/resources/data and its subdirectories
+/src/main/resources/data/*.xml
 
 ### Eclipse ###
 .apt_generated

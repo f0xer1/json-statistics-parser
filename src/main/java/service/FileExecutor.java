@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.summingLong;
 
 public class FileExecutor {
     private final ConcurrentHashMap<String, Long> statisticMap = new ConcurrentHashMap<>();
-    private final  FileProcessor processor = new FileProcessor();
+    private final FileProcessor processor = new FileProcessor();
 
 
     public Set<Map.Entry<String, Long>> execute(String attribute, List<File> files, Integer treadNumber) {

@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class XmlFileWriter {
 
-    public void write(Set<Map.Entry<String, Long>> map, String attribute) {
+    public String write(Set<Map.Entry<String, Long>> map, String attribute, String directoryPath) {
         try {
             Document document = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().newDocument();
             Element root = document.createElement("statistics");
@@ -25,11 +25,11 @@ public class XmlFileWriter {
                 appendChildWithTextNode(document, item, "count", entry.getValue().toString());
                 root.appendChild(item);
             });
-            writeXmlToFile(document, attribute);
+            return writeXmlToFile(document, attribute, directoryPath);
         } catch (ParserConfigurationException | TransformerException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error processing XML: " + e.getMessage());
         }
-
+        return "The program terminated due to an error";
     }
 
     private void appendChildWithTextNode(Document document, Element parent, String childName, String textContent) {
@@ -38,10 +38,11 @@ public class XmlFileWriter {
         parent.appendChild(child);
     }
 
-    private void writeXmlToFile(Document document, String attribute) throws TransformerException {
+    private String writeXmlToFile(Document document, String attribute, String directoryPath) throws TransformerException {
+        String fileName = "statistics_by_" + attribute.toLowerCase() + ".xml";
         TransformerFactory.newInstance().newTransformer()
-                .transform(new DOMSource(document), new StreamResult(
-                        "src/main/resources/xml/" + "statistics_by_"
-                                + attribute.toLowerCase() + ".xml"));
+                .transform(new DOMSource(document), new StreamResult(directoryPath + "/" + fileName));
+        return "Successfully created statistics file '" + fileName + "' in directory: " + directoryPath;
+
     }
 }
